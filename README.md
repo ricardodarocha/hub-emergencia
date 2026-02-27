@@ -1,12 +1,16 @@
-# AUTHENTICATION API WITH RUST
+# HUB EMERGENCIA API
 
 ```cmd
 git clone
 ```
-## Use this template and customize your own application
 
+## Rodar o ambiente
 
-## Run the application
+Se você tiver rust instaldo so instalar as dependencias e configurar o banco de dados em seguida cargo run --release.
+Se preferir uma opção precomilada acessar a pasta bin/windows/emgapi.exe
+
+## Rodar o banco de dados
+
 > (1) run postgre,
 > for example run with docker
 >```docker
@@ -17,12 +21,13 @@ git clone
 
 > (2) create database for authentication data
 >```sql
->psql create database database_name
+>psql -U postgres
+>psql create database emergencia
 >```
 
 > (3) export your database url and other .env variables
 >```cmd
->echo DATABASE_URL=postgres://postgres:secret@localhost:5432/database_name > .env
+>echo DATABASE_URL=postgres://postgres:postgres@localhost:5432/emergencia > .env
 >echo PORT=3000 >> .env
 >echo RUST_LOG=info,rust_rest_api=debug,tower_http=debug >> .env
 >```
