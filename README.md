@@ -3,6 +3,7 @@
 ```cmd
 git clone
 ```
+API white label para apoiar ações dos projetos de voluntários e outras iniciativas para ajudar vítimas em situação de emergência, enchentes, resgate etc.
 
 ## Rodar o ambiente
 
