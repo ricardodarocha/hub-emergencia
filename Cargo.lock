@@ -437,6 +437,28 @@ dependencies = [
 ]
 
 [[package]]
+name = "emapi"
+version = "0.1.0"
+dependencies = [
+ "argon2",
+ "axum",
+ "chrono",
+ "dotenvy",
+ "headers",
+ "jsonwebtoken",
+ "password-hash",
+ "rand",
+ "serde",
+ "serde_json",
+ "sqlx",
+ "thiserror",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+ "uuid",
+]
+
+[[package]]
 name = "equivalent"
 version = "1.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1489,28 +1511,6 @@ dependencies = [
  "spki",
  "subtle",
  "zeroize",
-]
-
-[[package]]
-name = "rust-login-axum"
-version = "0.1.0"
-dependencies = [
- "argon2",
- "axum",
- "chrono",
- "dotenvy",
- "headers",
- "jsonwebtoken",
- "password-hash",
- "rand",
- "serde",
- "serde_json",
- "sqlx",
- "thiserror",
- "tokio",
- "tracing",
- "tracing-subscriber",
- "uuid",
 ]
 
 [[package]]
