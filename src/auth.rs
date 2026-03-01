@@ -17,7 +17,7 @@ use crate::password::verify_password;
 #[derive(Deserialize)]
 pub struct AuthRequest {
     pub email: String,
-    pub password: String,
+    pub senha: String,
 }
 
 #[derive(Serialize)]
@@ -31,7 +31,7 @@ pub struct AuthResponse {
 ) -> Result<Json<AuthResponse>, axum::http::StatusCode> {
     let user = sqlx::query_as!(
         User,
-        r#"SELECT id, name, email, password FROM users WHERE email = $1"#,
+        r#"SELECT id, nome, email, senha FROM users WHERE email = $1"#,
         payload.email
     )
     .fetch_optional(&state.db)
@@ -41,19 +41,19 @@ pub struct AuthResponse {
     let user = match user {
         Some(u) => u,
         None => {
-            const DUMMY_HASH: &str = "kaioqweq:9201312qiw3120io32oi424io2oi.rustuptoolchainsnightly-x86_64-pc-windows-msvclibrustlibsrcrustlibraryallocsrcstring.rs:2868";
-            let _ = verify_password(&payload.password, DUMMY_HASH);     
+            const DUMMY_HASH: &str = "f1248550-daf0-5d4e-b509-417aa5b2172c943a7072-0e1a-5465-9f34-5d5482d23239";
+            let _ = verify_password(&payload.senha, DUMMY_HASH);     
             return Err(axum::http::StatusCode::UNAUTHORIZED)
         },    
     };
 
     // 🔐 verificação segura
-    let password_valid = verify_password(&payload.password, &user.password);
+    let password_valid = verify_password(&payload.senha, &user.senha);
     if !password_valid {
         return Err(axum::http::StatusCode::UNAUTHORIZED);
     }
 
-    let token = jwt::generate(user.id)
+    let token = jwt::generate(&user.id) 
         .map_err(|_| axum::http::StatusCode::INTERNAL_SERVER_ERROR)?;
 
     Ok(Json(AuthResponse {token}))

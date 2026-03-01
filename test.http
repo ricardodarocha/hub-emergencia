@@ -1,0 +1,179 @@
+### Base URL
+@baseUrl = http://127.0.0.1:3000
+@appId=a354c85a-6fc1-4152-9c96-69e75fcccc27
+
+### Register - Create a new user
+# @name register
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "nome": "Demonstração",
+  "email": "emergencia",
+  "senha": "123456"
+}
+
+### Login - obter token
+# @name login
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+  "email": "emergencia",
+  "senha": "123456"
+}
+ 
+### Extrai token do response JSON
+@token = {{login.response.body.token}}
+ 
+
+### Teste rota protegida
+GET {{baseUrl}}/users
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+### Testar rota white label
+
+
+### Aplicativos cadastrados
+GET {{baseUrl}}/apps 
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+### Pontos de Coleta e Abrigos
+GET {{baseUrl}}/pontos
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+### Novo Ponto de coleta
+POST {{baseUrl}}/pontos
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+{
+  "nome": "Ponto de Coleta de Demonstracao",
+  "categoria": "Ponto de Coleta",
+  "tipo": "Igreja",
+  "municipio": "Juiz de Fora",
+  "endereco": "Rua Frei Caneca, 100",
+  "telefone": "+55 32 98888-1111",
+  "bairro": "Centro",
+  "horarios": "Seg a Sex 08:00-17:00",
+  "responsavel": "Pe. Almeida",
+  "app_id": "a354c85a-6fc1-4152-9c96-69e75fcccc27",
+  "pix": "12345678000199",
+  "cnpj": "12.345.678/0001-99",
+  "itens": "AGUA, ROUPAS, ALIMENTOS",
+  "gps": "-21.7622,-43.3430",
+  "metadados": {
+    "acessivel_cadeirante": true,
+    "estacionamento": false,
+    "observacoes": "Entrada lateral disponível"
+  }
+}
+
+### Novo Abrigo
+POST {{baseUrl}}/pontos
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+{
+  "nome": "Ponto de Coleta de Demonstracao",
+  "categoria": "Abrigo",
+  "tipo": "Escola",
+  "municipio": "Juiz de Fora",
+  "endereco": "Rua São Francisco de Assis, 20",
+  "telefone": "+55 32 98888-1112",
+  "bairro": "Centro",
+  "horarios": "Seg a Sex 08:00-17:00",
+  "responsavel": "Professora Maria",
+  "app_id": "a354c85a-6fc1-4152-9c96-69e75fcccc27", 
+  "cnpj": "12.345.678/0001-99",
+  "itens": "AGUA, ROUPAS, ALIMENTOS",
+  "gps": "-21.7622,-43.3430",
+  "metadados": {
+    "acessivel_cadeirante": true,
+    "estacionamento": false,
+    "observacoes": "Entrada lateral disponível"
+  }
+}
+
+### Voluntarios
+GET {{baseUrl}}/voluntarios 
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+### Criar Voluntario
+POST {{baseUrl}}/voluntarios
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+{
+  "app_id": "app_123abc",
+  "nome": "Maria Aparecida Souza",
+  "telefone": "+55 32 99999-2222",
+  "municipio": "Juiz de Fora",
+  "categoria": "Motorista",
+  "mensagem": "Disponível para entregas aos finais de semana.",
+  "metadados": {
+    "possui_veiculo": true,
+    "tipo_veiculo": "Carro",
+    "cnh_categoria": "B"
+  }
+}
+
+### Pedidos de Ajuda
+GET {{baseUrl}}/solicitacoes 
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+### Novo Pedido de Ajuda
+POST {{baseUrl}}/solicitacoes 
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+{
+  "app_id": "app_123abc",
+  "nome": "José Ferreira",
+  "telefone": "+55 32 97777-3333",
+  "municipio": "Juiz de Fora",
+  "categoria": "Cesta Básica",
+  "mensagem": "Família com 3 crianças precisa de alimentos.",
+  "metadados": {
+    "quantidade_pessoas": 5,
+    "criancas": 3,
+    "idosos": 0,
+    "urgente": true
+  },
+  "status": "NOVO",
+  "votos": 0
+}
+
+### Denuncias
+GET {{baseUrl}}/denuncias
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+
+### Nova Denuncia
+POST {{baseUrl}}/denuncias
+X-Emergencial-Id:{{appId}}
+Content-Type: application/json
+
+{
+  "tipo": "DEMONSTRACAO",
+  "memorando": "Aqui vai ter a descricao da denuncia",
+  "url": "https://sitefalso.com/denuncias/123",
+  "chave_pix": "12345678000199",
+  "evidencias": "https://peek.com/uploads/evidencia1.jpg",
+  "metadados": {
+    "ip_origem": "177.54.12.88",
+    "dispositivo": "Android",
+    "localizacao_aproximada": {
+      "latitude": -21.7622,
+      "longitude": -43.3430
+    },
+    "anonima": false
+  },
+  "created_by": null
+}

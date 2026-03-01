@@ -7,12 +7,15 @@ use tracing_subscriber;
 mod db;  
 mod handlers;  
 mod models;  
+mod payloads;  
 mod routes;  
 mod middleware;
+mod pagination;
 
 mod jwt;
 mod auth;
 mod password; 
+mod error;
   
 use db::connect;  
 use handlers::AppState;  

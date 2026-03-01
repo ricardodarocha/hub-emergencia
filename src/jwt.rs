@@ -1,13 +1,13 @@
 use jsonwebtoken::{encode, decode, Header, Validation, EncodingKey, DecodingKey};
 use serde::{Serialize, Deserialize};
-use uuid::Uuid;
+// use uuid::Uuid;
 use chrono::{Utc, Duration};
 
 const SECRET: &[u8] = b"23aacf19-d4ed-5fc4-a1ad-db0dbc9d882c-8962a11f-7fff-5b5a-92cb-cc9275dbb447";
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
-    pub sub: Uuid,
+    pub sub: String,
     pub exp: usize,
 }
 
@@ -23,13 +23,13 @@ pub struct Claims {
 
 pub type JwtResult<T> = Result<T, jsonwebtoken::errors::Error>;
 
-pub fn generate(user_id: Uuid) -> JwtResult<String> {
+pub fn generate(user_id: &String) -> JwtResult<String> {
     let exp = Utc::now()
         .checked_add_signed(Duration::hours(24))
         .expect("valid timestamp")
         .timestamp() as usize;
 
-    let claims = Claims { sub: user_id, exp };
+    let claims = Claims { sub: user_id.clone(), exp };
 
     let token = encode(
         &Header::default(),
